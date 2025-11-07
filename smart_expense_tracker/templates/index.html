@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Expense Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>💰 Smart Expense Tracker</h1>
+    <form method="POST" action="/add">
+      <input type="date" name="date" required>
+      <select name="category" required>
+        <option>Food</option>
+        <option>Travel</option>
+        <option>Shopping</option>
+        <option>Rent</option>
+        <option>Other</option>
+      </select>
+      <input type="number" step="0.01" name="amount" placeholder="Amount" required>
+      <input type="text" name="description" placeholder="Description">
+      <button type="submit">Add Expense</button>
+    </form>
+
+    <table class="table">
+      <tr>
+        <th>Date</th><th>Category</th><th>Amount</th><th>Description</th><th>Month</th>
+      </tr>
+      {% for row in data %}
+      <tr>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>₹{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+        <td>{{ row[5] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <center><a href="/new_dashboard"><button>View Dashboard</button></a></center>
+  </div>
+</body>
+</html>

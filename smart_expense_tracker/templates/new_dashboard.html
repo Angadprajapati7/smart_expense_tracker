@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>📈 Expense Dashboard</h2>
+
+    <canvas id="categoryChart"></canvas>
+    <canvas id="monthlyChart"></canvas>
+
+    {% if suggestion %}
+    <div class="ai-box">
+        <h3>🤖 AI Suggestion</h3>
+        <p>{{ suggestion }}</p>
+    </div>
+    {% endif %}
+
+    <center><a href="/"><button>← Back</button></a></center>
+  </div>
+
+  <script>
+    const categoryLabels = {{ category_labels|tojson }};
+    const categoryValues = {{ category_values|tojson }};
+    const monthlyLabels = {{ monthly_labels|tojson }};
+    const monthlyValues = {{ monthly_values|tojson }};
+
+    new Chart(document.getElementById("categoryChart"), {
+      type: 'pie',
+      data: {
+        labels: categoryLabels,
+        datasets: [{ data: categoryValues }]
+      }
+    });
+
+    new Chart(document.getElementById("monthlyChart"), {
+      type: 'bar',
+      data: {
+        labels: monthlyLabels,
+        datasets: [{
+          label: "Monthly Expenses",
+          data: monthlyValues
+        }]
+      }
+    });
+  </script>
+</body>
+</html>
